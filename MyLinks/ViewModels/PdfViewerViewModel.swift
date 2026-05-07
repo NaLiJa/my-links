@@ -6,11 +6,11 @@ import SwiftUI
 @Observable
 class PdfViewerViewModel {
     @ObservationIgnored private let apiClientRepository: ApiClientRepository
-    @ObservationIgnored private let linkId: Int
+    @ObservationIgnored private let link: Link
 
-    init(apiClientRepisotory: ApiClientRepository = RepositoriesContainer.shared.apiClientRepository, linkId: Int) {
+    init(apiClientRepisotory: ApiClientRepository = RepositoriesContainer.shared.apiClientRepository, link: Link) {
         self.apiClientRepository = apiClientRepisotory
-        self.linkId = linkId
+        self.link = link
     }
     
     var pdfData: PDFDocument? = nil
@@ -29,12 +29,12 @@ class PdfViewerViewModel {
             self.loading = true
         }
         guard let instance = apiClientRepository.instance else { return }
-        let result = await instance.files.fetchPdf(linkId: linkId)
-        if result.successful == true {
+        let result = await instance.files.fetchPdf(linkId: link.id)
+        if let data = result.data {
             DispatchQueue.main.async {
                 withAnimation(.default) {
-                    self.data = result.data!
-                    self.pdfData = PDFDocument(data: result.data!)
+                    self.data = data
+                    self.pdfData = PDFDocument(data: data)
                     self.loading = false
                     self.error = false
                 }

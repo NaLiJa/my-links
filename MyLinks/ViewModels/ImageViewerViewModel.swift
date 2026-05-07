@@ -28,12 +28,12 @@ class ImageViewerViewModel {
             self.loading = true
         }
         guard let instance = apiClientRepository.instance else { return }
-        let result = await instance.files.fetchImage(linkId: link.id)
-        if result.successful == true {
+        let result = await instance.files.fetchImage(linkId: link.id, isFile: link.url == nil)
+        if let data = result.data {
             DispatchQueue.main.async {
                 withAnimation(.default) {
-                    self.data = result.data!
-                    self.imageData = UIImage(data: result.data!)
+                    self.data = data
+                    self.imageData = UIImage(data: data)
                     self.loading = false
                     self.error = false
                 }

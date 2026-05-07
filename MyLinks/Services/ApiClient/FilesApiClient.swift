@@ -91,10 +91,10 @@ struct FilesApiClient: Equatable {
         }
     }
     
-    func fetchImage(linkId: Int) async -> StatusResponse<Data> {
+    func fetchImage(linkId: Int, isFile: Bool = false) async -> StatusResponse<Data> {
         let defaultErrorResponse = StatusResponse<Data>(successful: false, statusCode: nil, data: nil)
-        
-        guard let url = URL(string: "\(self.instance.url)/api/v1/archives/\(linkId)?format=1") else { return defaultErrorResponse }
+        let format = isFile == true ? "0" : "1"
+        guard let url = URL(string: "\(self.instance.url)/api/v1/archives/\(linkId)?format=\(format)") else { return defaultErrorResponse }
         do {
             let components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
             

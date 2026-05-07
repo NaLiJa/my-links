@@ -11,7 +11,7 @@ struct PDFViewerView: View {
     init(link: Link, onClose: @escaping () -> Void) {
         self.link = link
         self.onClose = onClose
-        _pdfViewerViewModel = State(initialValue: PdfViewerViewModel(linkId: link.id))
+        _pdfViewerViewModel = State(initialValue: PdfViewerViewModel(link: link))
     }
     
     var body: some View {
