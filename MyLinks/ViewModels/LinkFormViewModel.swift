@@ -79,7 +79,7 @@ class LinkFormViewModel {
         Task {
             self.saving = true
             
-            if editingLink != nil {
+            if let editingLink = editingLink {
                 var body = LinkEditingRequest(
                     url: url != "" ? url : nil,
                     name: name,
@@ -87,13 +87,13 @@ class LinkFormViewModel {
                     type: mode == .url ? "url" : selectedFileUrl?.pathExtension.lowercased() == "pdf" ? "pdf" : "image",
                     tags: selectedTags.map() { TagCreation(name: $0) },
                     collection: col != nil ? CollectionCreation(id: col!.id, name: col!.name, ownerId: col!.ownerId) : nil,
-                    pinnedBy: editingLink != nil ? editingLink!.pinnedBy?.map() { PinnedByRequestEditing(id: $0.id) } : nil,
-                    image: self.editingLink?.image,
-                    pdf: self.editingLink?.pdf,
+                    pinnedBy: editingLink.pinnedBy?.map() { PinnedByRequestEditing(id: $0.id) },
+                    image: editingLink.image,
+                    pdf: editingLink.pdf,
                 )
                 
-                body.id = editingLink?.id
-                await linkManagerRepository.editLink(id: editingLink!.id, body: body) { link in
+                body.id = editingLink.id
+                await linkManagerRepository.editLink(id: editingLink.id, body: body) { link in
                     DispatchQueue.main.async {
                         self.saving = false
                     }
@@ -125,9 +125,9 @@ class LinkFormViewModel {
                     type: mode == .url ? "url" : selectedFileUrl?.pathExtension.lowercased() == "pdf" ? "pdf" : "image",
                     tags: selectedTags.map() { TagCreation(name: $0) },
                     collection: col != nil ? CollectionCreation(id: col!.id, name: col!.name, ownerId: col!.ownerId) : nil,
-                    pinnedBy: editingLink != nil ? editingLink!.pinnedBy?.map() { PinnedByRequest(id: $0.id) } : nil,
-                    image: self.editingLink?.image,
-                    pdf: self.editingLink?.pdf,
+                    pinnedBy: nil,
+                    image: nil,
+                    pdf: nil,
                 )
                 
                 if mode == .file && selectedFileUrl == nil {

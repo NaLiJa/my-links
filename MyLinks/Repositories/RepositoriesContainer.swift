@@ -10,12 +10,16 @@ class RepositoriesContainer {
     
     let apiClientRepository = ApiClientRepository()
     
+    lazy var userRepository: UserRepository = {
+        return UserRepository(apiClientRepository: apiClientRepository)
+    }()
+    
     lazy var collectionsRepository: CollectionsRepository = {
         return CollectionsRepository(apiClientRepository: apiClientRepository)
     }()
     
     lazy var linkManagerRepository: LinkManagerRepository = {
-        return LinkManagerRepository(apiClientRepository: apiClientRepository)
+        return LinkManagerRepository(apiClientRepository: apiClientRepository, userRepository: userRepository)
     }()
     
     lazy var tagManagerRepository: TagManagerRepository = {

@@ -105,6 +105,7 @@ fileprivate struct ActiveServerView: View {
         }
         .task {
             rootViewModel.fetchCollections()
+            rootViewModel.fetchUserData()
         }
     }
 }

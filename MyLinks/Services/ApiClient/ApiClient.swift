@@ -38,6 +38,7 @@ struct ApiClient: Equatable {
     let tags: TagsApiClient
     let dashboard: DashboardApiClient
     let files: FilesApiClient
+    let users: UserApiClient
     
     init(instance: ServerApiInstance) {
         self.instance = instance
@@ -46,6 +47,7 @@ struct ApiClient: Equatable {
         self.tags = TagsApiClient(instance: instance)
         self.dashboard = DashboardApiClient(instance: instance)
         self.files = FilesApiClient(instance: instance)
+        self.users = UserApiClient(instance: instance)
     }
     
     func getInstanceUrl() -> String {

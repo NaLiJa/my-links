@@ -4,10 +4,12 @@ import SwiftUI
 @MainActor
 @Observable
 class LinkManagerRepository {
-    let apiClientRepository: ApiClientRepository
+    @ObservationIgnored private let apiClientRepository: ApiClientRepository
+    @ObservationIgnored private let userRepository: UserRepository
     
-    init(apiClientRepository: ApiClientRepository) {
+    init(apiClientRepository: ApiClientRepository, userRepository: UserRepository) {
         self.apiClientRepository = apiClientRepository
+        self.userRepository = userRepository
     }
     
     var processing = false
@@ -89,7 +91,7 @@ class LinkManagerRepository {
             description: link.description,
             tags: link.tags.map() { TagCreation(name: $0.name) },
             collection: CollectionCreation(id: link.collection.id, name: link.collection.name, ownerId: link.collection.ownerId),
-            pinnedBy: action == .pin ? [PinnedByRequestEditing(id: 1)] : [],
+            pinnedBy: action == .pin ? [PinnedByRequestEditing(id: userRepository.data?.id)] : [],
             image: link.image,
             pdf: link.pdf
         )

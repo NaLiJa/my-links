@@ -2772,6 +2772,16 @@
         }
       }
     },
+    "Username" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre de usuario"
+          }
+        }
+      }
+    },
     "Username and password" : {
       "localizations" : {
         "es" : {

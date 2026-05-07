@@ -68,6 +68,14 @@ struct GeneralSettings: View {
                             }
                             .foregroundStyle(Color.gray)
                         }
+                        if let user = settingsViewModel.userData {
+                            HStack {
+                                Text("Username")
+                                Spacer()
+                                Text(user.username)
+                            }
+                            .foregroundStyle(Color.gray)
+                        }
                         Button {
                             disconnectAlert.toggle()
                         } label: {

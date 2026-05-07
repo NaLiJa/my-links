@@ -30,6 +30,7 @@ struct RootView: View {
                 }
                 .task {
                     rootViewModel.fetchCollections()
+                    rootViewModel.fetchUserData()
                 }
             }
         }

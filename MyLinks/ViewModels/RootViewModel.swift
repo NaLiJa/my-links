@@ -9,13 +9,15 @@ class RootViewModel {
     @ObservationIgnored private let collectionsRepository: CollectionsRepository
     @ObservationIgnored private let navigationRepository: NavigationRepository
     @ObservationIgnored private let progressIndicatorRepository: ProgressIndicatorRepository
+    @ObservationIgnored private let userRepository: UserRepository
     
-    init(apiClientRepository: ApiClientRepository = RepositoriesContainer.shared.apiClientRepository, toastRepository: ToastRepository = RepositoriesContainer.shared.toastRepository, collectionsRepository: CollectionsRepository = RepositoriesContainer.shared.collectionsRepository, navigationRepository: NavigationRepository = RepositoriesContainer.shared.navigationRepository, progressIndicatorRepository: ProgressIndicatorRepository = RepositoriesContainer.shared.progressIndicatorRepository) {
+    init(apiClientRepository: ApiClientRepository = RepositoriesContainer.shared.apiClientRepository, toastRepository: ToastRepository = RepositoriesContainer.shared.toastRepository, collectionsRepository: CollectionsRepository = RepositoriesContainer.shared.collectionsRepository, navigationRepository: NavigationRepository = RepositoriesContainer.shared.navigationRepository, progressIndicatorRepository: ProgressIndicatorRepository = RepositoriesContainer.shared.progressIndicatorRepository, userRepository: UserRepository = RepositoriesContainer.shared.userRepository) {
         self.apiClientRepository = apiClientRepository
         self.toastRepository = toastRepository
         self.collectionsRepository = collectionsRepository
         self.navigationRepository = navigationRepository
         self.progressIndicatorRepository = progressIndicatorRepository
+        self.userRepository = userRepository
     }
     
     var showOnboarding = false
@@ -29,6 +31,12 @@ class RootViewModel {
     func fetchCollections() {
         Task {
             await collectionsRepository.loadData()
+        }
+    }
+    
+    func fetchUserData() {
+        Task {
+            await userRepository.loadData()
         }
     }
     
